@@ -1,0 +1,4 @@
+fastapi
+kubernetes
+pydantic
+uvicorn

@@ -1,0 +1,24 @@
+# Phase 1: Gradual Load Increase (forces scaling up)
+stress-ng -- cpu 1 --io 1 --vm 1 --timeout 120s
+stress-ng -- cpu 2 --io 2 --vm 2 --timeout 120s
+stress-ng -- cpu 3 --io 2 --vm 2 --timeout 120s
+stress-ng -- cpu 3 --io 3 --vm 3 --timeout 180s
+stress-ng -- cpu 4 --io 3 --vm 3 --timeout 180s
+
+# Phase 2: Peak Load (maintains high pod count)
+stress-ng -- cpu 4 --io 4 --vm 4 --timeout 160s
+stress-ng -- cpu 4 --io 4 --vm 4 --timeout 160s
+stress-ng -- cpu 4 --io 3 --vm 3 --timeout 160s
+
+# Phase 3: Load Decrease (forces scaling down)
+stress-ng -- cpu 2 --io 2 --vm 2 --timeout 140s
+stress-ng -- cpu 1 --io 1 --vm 1 --timeout 140s
+stress-ng -- cpu 1 --io 1 --vm 1 --timeout 120s
+
+# Phase 4: Load Spike (demonstrates responsiveness)
+stress-ng -- cpu 4 --io 3 --vm 3 --timeout 90s
+stress-ng -- cpu 1 --io 1 --vm 1 --timeout 120s
+
+# Repeat pattern to show consistency
+stress-ng -- cpu 3 --io 2 --vm 2 --timeout 150s
+stress-ng -- cpu 1 --io 1 --vm 1 --timeout 120s
